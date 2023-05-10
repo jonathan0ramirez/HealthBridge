@@ -1,11 +1,11 @@
 package com.healthbridge.dao;
 
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 import com.healthbridge.entity.Patient;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 
 @Repository
 public class DefaultPatientDao implements PatientDao {
@@ -30,11 +30,7 @@ public class DefaultPatientDao implements PatientDao {
     return entityManager.createQuery("SELECT p FROM Patient p", Patient.class).getResultList();
   }
 
-  @Override
-  public void setEntityManager(EntityManager entityManager) {
-    this.entityManager = entityManager;
-    
-  }
+
   
   
 }

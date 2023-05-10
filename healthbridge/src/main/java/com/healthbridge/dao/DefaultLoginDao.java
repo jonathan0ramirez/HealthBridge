@@ -1,12 +1,12 @@
 package com.healthbridge.dao;
 
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import com.healthbridge.entity.Login;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import lombok.extern.slf4j.Slf4j;
 
 @Repository //this is DAO class

@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.healthbridge.dao.DefaultPatientDao;
 import com.healthbridge.entity.Gender;
 import com.healthbridge.entity.Patient;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+
 
 @SpringBootTest
 @ActiveProfiles("test")

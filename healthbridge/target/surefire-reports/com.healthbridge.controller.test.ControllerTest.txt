@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: com.healthbridge.controller.test.ControllerTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 5.617 s <<< FAILURE! - in com.healthbridge.controller.test.ControllerTest
+testLoginEndpoint  Time elapsed: 0.357 s  <<< FAILURE!
+java.lang.AssertionError: Redirected URL expected:</staff/home> but was:</login?error=invalid>
+	at com.healthbridge.controller.test.ControllerTest.testLoginEndpoint(ControllerTest.java:27)
+

@@ -1,16 +1,19 @@
 package com.healthbridge.login.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import com.healthbridge.service.LoginService;
 import com.healthbridge.entity.Login;
 import com.healthbridge.errorhandler.InvalidLoginException;
 
-@Controller
-@RequestMapping("/login")
+@RestController
+@RequestMapping("/login/staff")
 public class LoginController {
 
     private final LoginService loginService;
@@ -19,9 +22,9 @@ public class LoginController {
     public LoginController(LoginService loginService) {
       this.loginService = loginService;
     }
-
+    
     @GetMapping
-    public String login(@RequestParam String username, @RequestParam String password) throws InvalidLoginException {
+    public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) throws InvalidLoginException {
       
       System.out.println(username.toString());
       System.out.println(password.toString());
@@ -30,16 +33,16 @@ public class LoginController {
       if (validatedLogin != null && validatedLogin.getStaffRole().equals("staff")) {
         System.out.println("inside: " + username.toString());  
         
-        return "redirect:/staff/home";
+        return ResponseEntity.ok("Redirect to staff home page");
           
       } 
       }
       catch(InvalidLoginException e) {
-          return "redirect:/login?error=invalid";
+          return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         
         }
-        return "redirect:/login?error=invalid";
-    
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+      
     }
     
   

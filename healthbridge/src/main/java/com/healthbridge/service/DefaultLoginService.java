@@ -21,14 +21,14 @@ public class DefaultLoginService implements LoginService {
     if (login == null) {
       throw new InvalidLoginException("Username not found");
     }
+    String storedPassword = login.getPassword();
     
-    if (!password.equals(login.getPassword())) {
+    if (password.equals(storedPassword)) {
+      return login;
+    } else {
       throw new InvalidLoginException("Incorrect password");
-    } else if (password == null) {
-      throw new InvalidLoginException("Please input valid username and password");
     }
     
-    return login;
     
   }
 
