@@ -69,7 +69,18 @@
     <version>5.3.1</version>
     <scope>test</scope>
 </dependency>
-
+<!-- Swagger -->
+  <dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger2</artifactId>
+    <version>2.9.2</version>
+  </dependency>
+  <dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger-ui</artifactId>
+    <version>2.9.2</version>
+  </dependency>
+<!-- Swagger -->
 
 <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
 <dependency>
@@ -77,7 +88,21 @@
     <artifactId>junit-jupiter-api</artifactId>
     <scope>test</scope>
 </dependency>
-    
+
+<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+  <dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-ui</artifactId>
+    <version>1.6.15</version>
+  </dependency>
+  
+ <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+  <dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <version>2.1.214</version>
+    <scope>test</scope>
+  </dependency> 
     <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
 <dependency>
     <groupId>org.springframework</groupId>
@@ -103,9 +128,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-<!-- apache maven -->
 
-<!-- Apache maven -->
 
   <build>
     <plugins>

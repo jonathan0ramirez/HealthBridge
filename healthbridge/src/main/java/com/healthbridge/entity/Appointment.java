@@ -1,7 +1,11 @@
 package com.healthbridge.entity;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,12 +28,18 @@ public class Appointment {
   @Column(name = "appointment_id")
   private Integer id;
   
-  @Column(name = "appointment_date_time")
-  private LocalDateTime appointmentDateTime;
+  @Column(name = "appointment_date")
+  private LocalDate appointmentDate;
+  
+  @Column(name = "appointment_time")
+  private LocalTime appointmentTime;
+  
+  @Column(name = "appointment_duration")
+  private LocalTime appointmentDuration;
   
   @Enumerated(EnumType.STRING)
   @Column(name = "status")
-  private AppointementStatus Status;
+  private AppointmentStatus Status;
   
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "patient_id", nullable = false)

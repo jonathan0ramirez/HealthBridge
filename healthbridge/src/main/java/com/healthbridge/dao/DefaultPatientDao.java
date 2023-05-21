@@ -3,6 +3,7 @@ package com.healthbridge.dao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 import com.healthbridge.entity.Patient;
@@ -27,10 +28,10 @@ public class DefaultPatientDao implements PatientDao {
   @Transactional
   @Override
   public List<Patient> getAll() {
-    return entityManager.createQuery("SELECT p FROM Patient p", Patient.class).getResultList();
+    String sql = "SELECT * FROM patient";
+    Query query = entityManager.createNativeQuery(sql, Patient.class);
+    List<Patient> patients = query.getResultList();
+    return patients;
   }
 
-
-  
-  
 }

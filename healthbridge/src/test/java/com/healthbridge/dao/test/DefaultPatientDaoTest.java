@@ -17,7 +17,6 @@ import com.healthbridge.dao.DefaultPatientDao;
 import com.healthbridge.entity.Gender;
 import com.healthbridge.entity.Patient;
 
-
 @SpringBootTest
 @ActiveProfiles("test")
 class DefaultPatientDaoTest {

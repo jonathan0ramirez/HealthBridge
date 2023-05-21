@@ -5,61 +5,58 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import com.healthbridge.controller.LoginController;
 import com.healthbridge.dao.DefaultLoginDao;
 import com.healthbridge.entity.Login;
 import com.healthbridge.errorhandler.InvalidLoginException;
-import com.healthbridge.login.controller.LoginController;
 import com.healthbridge.service.LoginService;
 
 @ExtendWith(MockitoExtension.class)
 public class LoginControllerTest {
-
-  private LoginController loginController;
-  
-  @Autowired
-  DefaultLoginDao loginDao;
   
   @Mock
   private LoginService loginService;
 
-  @BeforeEach
-  public void setUp() {
-    
-    //loginController = new LoginController(loginService);
-  }
+  @InjectMocks
+  private LoginController loginController;
   
   @Test
-  public void testValidStaffLogin() throws InvalidLoginException{
-      Login login = new Login();
-      login.setStaffRole("staff");
-      when(loginService.validateUser
-          ("testuser", "testpassword")).thenReturn(login);
-
-      //String redirect = loginController.login("testuser", "testpassword");
-      //assertEquals("redirect:/staff/home", redirect);
-
-      // Changing the username and password should cause the test to fail
-      //String redirect2 = loginController.login("wronguser", "wrongpassword");
-      //assertEquals("redirect:/login?error=invalid", redirect2);
-  }
-  
-  //if role is different than staff
-  @Test
-  public void testInvalidStaffLogin() throws InvalidLoginException{
+  void testLogin() throws InvalidLoginException{
+    String username = "testuser";
+    String password = "testpassword";
     Login login = new Login();
-    login.setStaffRole("patient");
-    when(loginService.validateUser
-        ("testuser", "testpassword")).thenReturn(login);
+    login.setStaffRole("staff");
     
-    //String redirect = loginController.login("testuser", "testpassword");
-    //assertEquals("redirect:/login?error=invalid", redirect);
+    when(loginService.validateUser(username, password)).thenReturn(login);
     
+    ResponseEntity<String> response = loginController.login(username, password);
     
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals("Redirect to staff home page", response.getBody());
     
   }
+  
+  @Test
+  void testLoginWithInvalidCredentials() throws InvalidLoginException{
+    String username = "testuser";
+    String password = "testpassword";
+    
+    when(loginService.validateUser(username, password))
+    .thenThrow(new InvalidLoginException("Invalid Credentials"));
+    
+    ResponseEntity<String> response = loginController.login(username, password);
+    
+    assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+    assertEquals("Invalid username or password", response.getBody());
+    
+  }
+  
 
 }

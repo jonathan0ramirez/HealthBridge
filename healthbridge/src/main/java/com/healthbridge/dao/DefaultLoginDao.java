@@ -55,16 +55,5 @@ public class DefaultLoginDao implements LoginDao {
     }
     }
   
- 
-  //for testing isolation
-  public void deleteAll() {
-    List<Login> logins = getAllLogins();
-    for (Login login : logins) {
-      entityManager.remove(login);
-    }
-  }
-  
-  
-  
   
 }
