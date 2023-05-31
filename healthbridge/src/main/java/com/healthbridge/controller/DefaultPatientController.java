@@ -1,5 +1,6 @@
 package com.healthbridge.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.healthbridge.entity.Patient;
 import com.healthbridge.errorhandler.ErrorResponse;
@@ -48,4 +50,14 @@ public class DefaultPatientController {
     return ResponseEntity.ok(patients);
   }
   
+  @GetMapping("/getByName")
+  public ResponseEntity<?> getPatientsByName(@RequestParam String firstName, @RequestParam String lastName){
+    List<Patient> patients = patientService.getByName(firstName, lastName);
+    if(patients != null && patients.size() > 0) {
+      return ResponseEntity.status(HttpStatus.OK).body(patients);
+      } else {
+        ErrorResponse errorResponse = new ErrorResponse("No patient/s found that matches the name provided.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+      }
+  }
 }

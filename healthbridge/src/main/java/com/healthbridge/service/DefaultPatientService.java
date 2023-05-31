@@ -29,4 +29,12 @@ public class DefaultPatientService implements PatientService {
     return patientDao.getAll();
   }
 
+  @Override
+  public List<Patient> getByName(String firstName, String lastName) {
+    
+    return patientDao.getByName(firstName, lastName);
+  }
+  
+  
+
 }

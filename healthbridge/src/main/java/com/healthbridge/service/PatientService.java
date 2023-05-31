@@ -8,4 +8,8 @@ public interface PatientService {
   Patient getById(Integer patientId);
   
   List<Patient> getAll();
+  
+  public List<Patient> getByName(String firstName, String lastName);
+  
+  
 }

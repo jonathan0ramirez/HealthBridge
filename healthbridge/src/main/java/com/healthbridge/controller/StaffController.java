@@ -20,6 +20,7 @@ public class StaffController {
       options.add("/staff/home/patients/getall");
       options.add("/staff/home/appointments");
       options.add("/staff/home/physicians");
+      options.add("/physician-patient");
       return ResponseEntity.ok(options);
   }
   

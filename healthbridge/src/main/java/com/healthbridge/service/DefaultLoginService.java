@@ -28,8 +28,19 @@ public class DefaultLoginService implements LoginService {
     } else {
       throw new InvalidLoginException("Incorrect password");
     }
+   }
+
+  @Override
+  public void updatePassword(String username, String newPassword) throws InvalidLoginException {
+    Login login = loginDao.findByUsername(username);
     
+    if(login == null) {
+      throw new InvalidLoginException("User not found");
+    }
     
+    login.setPassword(newPassword);
+    loginDao.save(login);
   }
+
 
 }

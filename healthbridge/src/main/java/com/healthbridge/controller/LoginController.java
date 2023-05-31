@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import com.healthbridge.service.LoginService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.servers.Server;
+import com.healthbridge.dao.LoginDao;
 import com.healthbridge.entity.Login;
 import com.healthbridge.errorhandler.InvalidLoginException;
 
@@ -25,6 +27,7 @@ import com.healthbridge.errorhandler.InvalidLoginException;
 public class LoginController {
 
     private final LoginService loginService;
+    private LoginDao loginDao; 
     
     @Autowired
     public LoginController(LoginService loginService) {
@@ -51,5 +54,20 @@ public class LoginController {
           return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         
         }
+    }
+    
+    @PostMapping("/updatePassword")
+    public ResponseEntity<String> updatePassword(@RequestParam String username, @RequestParam String password, @RequestParam String newPassword){
+      try {
+        Login validateLogin = loginService.validateUser(username, password);
+        if(validateLogin != null) {
+          loginService.updatePassword(username, newPassword);
+        } else { 
+          return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect password");
+        }
+      } catch (InvalidLoginException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+      }
+      return ResponseEntity.status(HttpStatus.OK).body("Password has been updated");
     }
 }

@@ -34,4 +34,14 @@ public class DefaultPatientDao implements PatientDao {
     return patients;
   }
 
+  @Override
+  public List<Patient> getByName(String firstName, String lastName) {
+    String sql = "SELECT * FROM patient WHERE first_name LIKE :firstname AND last_name LIKE :lastName";
+    Query query = entityManager.createNativeQuery(sql, Patient.class);
+    query.setParameter("firstname", firstName + "%");
+    query.setParameter("lastName", lastName + "%");
+    List<Patient> patients = query.getResultList();
+    return patients;
+  }
+
 }
